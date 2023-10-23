@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registration</title>
+</head>
+<body>
+
+<div>
+    <a href="{% url 'logout' %}">Logout</a>
+</div>
+
+<div class="user-list">
+    {% if users %}
+    <ul>
+        {% for u in users %}
+        <li class="{% if u == selected_user %}active{% endif %}">
+            <a href="{% url 'send_message'  u.id  %}">{{ u.name }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <div>No users found</div>
+    {% endif %}
+</div>
+
+<!-- Display the chat history -->
+<div class="chat-history">
+    {% for chat in chats %}
+    <div class="message {% if chat.sender == user %}sent{% else %}received{% endif %}">
+        <p>{{ chat.msg }}</p>
+        <span class="timestamp">{{ chat.created_at }}</span>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Message input form -->
+<form method="post" action="{% url 'send_message2'  %}">
+    {% csrf_token %}
+    <input type="hidden" name="receiver_id" value="{{ selected_user.id }}">
+    <input type="text" name="message" placeholder="Type your message..." required>
+    <button type="submit">Send</button>
+</form>
+</body>

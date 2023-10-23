@@ -1,0 +1,141 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  /* body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url('https://cdn.raptorsupplies.com/pub/static/frontend/Raptor/Desktop/en_US/images/rpt-logo.svg');
+    background-size:contain;
+    background-repeat:no-repeat;
+    background-color: rgba(0, 0, 255, 0.8);
+  } */
+  body {
+  padding: 0;
+  margin: 0;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  /* background-color: #F0F0F0; */
+  background-color: #2d4abd;
+  color:#12100E;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+  .options {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    z-index: 1; /* Place the options above the background image */
+    margin:15px;
+    border-radius: 6px;
+    /* padding: 10px; */
+    /* box-shadow: rgb(0 0 0 / 25%) 0px 0px 6px; */
+    -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+        box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+        transition: all 250ms
+  }
+
+  .option {
+    margin: 10px;
+    padding: 20px 40px;
+    font-size: 18px;
+    height: 20vh;
+    width: 20vh;
+    background-color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .option:hover {
+    background-color: #2d4abd;
+  }
+
+  .option-container{
+    background: #fff; 
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin:10px;
+  }
+  
+  .btn-red {
+        padding: 15px 25px;
+        border: unset;
+        border-radius: 15px;
+        color: #1f28d6;
+        z-index: 1;
+        background: transparent;
+        position: relative;
+        font-weight:600;
+        font-size: 18px;
+        -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+        box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+        transition: all 250ms;
+        overflow: hidden;
+        /* outline: 3px solid #1f28d6; */
+        }
+
+        .btn-red::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 0;
+        border-radius: 15px;
+        background-color: #2d4abd;
+        color: #fff;
+        z-index: -1;
+        
+        -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+        box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+        transition: all 250ms
+        
+        }
+
+        .btn-red:hover {
+        color: #fff;
+        
+        }
+
+        .btn-red:hover::before {
+        width: 100%;
+        }
+</style>
+<title>Landing Page</title>
+</head>
+<body>
+  <div class="options">
+    <div class="logos" style="display: flex; justify-content: center; height: 80px; align-items: center;">
+      <div class="" style="background: #fff; padding: 10px 20px; border-radius: 5px;">
+          <a href="{% url 'home' %}"><img src="https://cdn.raptorsupplies.com/pub/static/frontend/Raptor/Desktop/en_US/images/rpt-logo.svg"
+              style="width:100%;" alt="logo" /></a>
+      </div>
+  </div>
+    
+  </div>
+  <div class="options">
+    <div class="option-container">
+      <a href="{% url 'chat-list' %}"><button class="option btn-red">chatMRO</button></a>
+    </div>
+    <div class="option-container">
+      <a href="{% url 'blog' %}"><button class="option btn-red">Blog</button></a>
+    </div>
+    
+    
+  </div>
+  
+  
+</body>
+</html>

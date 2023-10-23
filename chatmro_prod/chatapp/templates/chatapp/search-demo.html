@@ -1,0 +1,502 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Search</title>
+</head>
+
+<body>
+    <!-- https://www.w3schools.com/icons/fontawesome_icons_webapp.asp -->
+    <!-- <i class="fa fa-address-book"></i> -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <style>
+        html,
+        body {
+            padding: 0;
+            margin: 0;
+            font-family: "Roboto", sans-serif;
+            font-weight: 400;
+            background-color: #fff;
+            color: #12100E;
+        }
+    
+        html {
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+    
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            height: 80px;
+            position: sticky;
+            z-index: 2;
+            top: 0;
+            background: #1a4ab9;
+        }
+    
+        
+    
+        a {
+            text-decoration: none;
+        }
+    
+        .main {
+            display: flex;
+        }
+    
+        .user-list {
+            min-height: 100vh;
+            min-width: 18.5%;
+            width: 23.5rem;
+            background: #1a4ab9;
+            -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+        box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+        }
+    
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+    
+        .user {
+            color: green;
+            background: white;
+            border-radius: 10px;
+            margin: 10px;
+            padding: 10px;
+        }
+        .active{
+            background:#4d94ff;
+            border-radius: 10px;
+            color:rgb(227, 29, 207);
+        }
+        .title {
+            color: black;
+            display: flex;
+            justify-content: center;
+            padding: 10px;
+            background: #fff;
+            position: sticky;
+            top: 80px;
+            z-index: 9999;
+            
+        }
+    
+        .chat-container {
+            margin-bottom: 20px;
+            position: relative;
+        }
+    
+        /* Scrollable Table Styles */
+        .scrollable-table {
+            max-height: calc(100vh - 260px); /* Adjust as needed */
+            overflow-y: auto;
+        }
+    
+        /* Table Styles */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            border: unset;
+            border-radius: 5px;
+            z-index: 1;
+            background: transparent;
+            position: relative;
+            font-weight:600;
+            font-size: 18px;
+            -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+            box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+
+        }
+    
+        th,
+        td {
+            padding: 8px;
+            border: 1px solid;
+            text-align: left;
+            
+        }
+        th{
+            white-space: nowrap;
+        }
+        .nowrap{
+            white-space: nowrap;
+        }
+        
+        
+        div {
+            text-align: center;
+        }
+        th {
+            background-color: #4d94ff;
+            color: black;
+        }
+        tr:hover td {
+            background-color:  #4d94ff;
+        }
+        td {
+            background-color: #e6f0ff;
+            padding: 12px;
+            text-align: left;
+        }
+        .btn-red {
+        padding: 5px 10px;
+        border: unset;
+        border-radius: 5px;
+        z-index: 1;
+        background: transparent;
+        position: relative;
+        font-weight:600;
+        font-size: 18px;
+        -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+        box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+        transition: all 250ms;
+        overflow: hidden;
+        /* outline: 3px solid #1f28d6; */
+        }
+
+        .btn-red::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 0;
+        border-radius: 5px;
+        background-color: #2d4abd;
+        color: #fff;
+        z-index: -1;
+        
+        -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+        box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+        transition: all 250ms
+        
+        }
+
+        .btn-red:hover {
+        color: #fff;
+        
+        }
+
+        .btn-red:hover::before {
+        width: 100%;
+        }
+        .dataTables_length{
+            padding: 5px 10px;
+        border: unset;
+        border-radius: 5px;
+        color: #1f28d6;
+        z-index: 1;
+        background: transparent;
+        position: relative;
+        font-weight:600;
+        font-size: 18px;
+        -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+        box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+        }
+        .paginate_button {
+            padding: 5px 10px;
+        border: unset;
+        border-radius: 15px;
+        color: #1f28d6;
+        z-index: 1;
+        background: transparent;
+        position: relative;
+        font-weight:600;
+        font-size: 18px;
+        -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+        box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+        transition: all 250ms;
+        overflow: hidden;
+
+        }
+        .dataTables_info{
+            padding: 5px 10px;
+        border: unset;
+        border-radius: 5px;
+        color: #1f28d6;
+        z-index: 1;
+        background: transparent;
+        position: relative;
+        font-weight:600;
+        font-size: 18px;
+        -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+        box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+
+        }
+        .dataTables_filter{
+            padding: 5px 10px;
+        border: unset;
+        border-radius: 5px;
+        color: #1f28d6;
+        z-index: 1;
+        background: transparent;
+        position: relative;
+        font-weight:600;
+        font-size: 18px;
+        -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+        box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+        }
+        .submit{
+            padding: 5px 10px;
+        border: unset;
+        border-radius: 5px;
+        color: #1f28d6;
+        z-index: 1;
+        background: transparent;
+        position: relative;
+        font-weight:600;
+        font-size: 18px;
+        -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+        box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+
+        }
+        .title{
+        border-radius: 5px;
+        background: transparent;
+        font-weight:600;
+        font-size: 18px;
+        -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+        box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+        }
+        .form{
+            width: 100%;
+             max-width: 300px; 
+             margin-bottom: 10px;
+             border-radius: 5px;
+             background: transparent;
+             padding: 5px;
+        font-weight:600;
+        font-size: 18px;
+        -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+        box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+
+        }
+        .form-outline{
+            margin: 10px;
+            width: 100%;
+            padding: 5px;
+        }
+        .loader {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 2s linear infinite;
+            display: none; /* Initially hidden */
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 4;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .blur-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Adjust opacity as needed */
+            backdrop-filter: blur(5px); /* Adjust blur intensity as needed */
+            z-index: 3; /* Place behind loader */
+            display: none; /* Initially hidden */
+        }
+
+    </style>
+    
+    
+    <div class="blur-background" id="blurBackground"></div>
+    <div class="main">
+
+        
+        <!-- sidebar left  -->
+
+        <!-- Display the chat history -->
+        <div class="wrapper">
+
+            <!-- navbar top  -->
+            <div class="navbar">
+                <!-- <img src="https://cdn.raptorsupplies.com/pub/static/frontend/Raptor/Desktop/en_US/images/rpt-logo.svg" style="width:150px;" alt="logo" />
+    -->         <div class="logos" style="display: flex; justify-content: center; height: 80px; align-items: center;">
+        <div class="" style="background: #fff; padding: 10px 20px; border-radius: 15px;">
+            <a href="{% url 'home' %}"><img src="https://cdn.raptorsupplies.com/pub/static/frontend/Raptor/Desktop/en_US/images/rpt-logo.svg"
+                style="width:150px;" alt="logo" /></a>
+        </div>
+    </div>
+                <div>
+                    <h3><b>Hello! </b>{{ user.name |capfirst }}</h3>
+                </div>
+                <div>
+                    <a href="{% url 'logout' %}" style="color: #fff;">Logout</a>
+                </div>
+            </div>
+            <div class="title">
+                <h2 style="margin-top:0px; margin-bottom: 0px;"> Embeddings Search</h2>
+            </div>
+            <div class="base-field" style="padding: 10px 20px; overflow: auto; max-height: calc(100vh - 180px);">
+                <hr>
+                <div id="loader" class="loader"></div>
+                <div class="chat-container">
+                    <div class="chat-history" id="chatHistory">
+                        <div id="content">
+                            <h2></h2>
+                            <div style="text-align: center;">
+                                <form id="searchForm" action="{% url 'search' %}" method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="form-outline">
+                                    <input  type="text" id="mpnsearch" name="search"  required class="form" placeholder="Enter Query.">
+                                    </div>
+                                    <button class="btn-red login-btn" type="submit">Search</button>
+                                </form>
+                                
+                            </div>
+                            {% if result %}
+                                <div>
+                                <table id="outputdata" >
+                                    <thead>
+                                         <tr>
+                                            <th>S.NO</th>
+                                            <th>brand_name</th>
+                                            <th>title</th>
+                                            <th>Product URL</th>
+                                            <th>mpn</th>
+                                            <th>catlvl1</th>
+                                            <th>spec</th>
+                                            <!-- Add more columns as needed -->
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for data in result %}
+                                        <tr>
+                                            <td>{{ forloop.counter }}</td>
+                                            <td>{{ data.brand_name }}</td>
+                                            <td>{{ data.title }}</td>
+                                            <td class="nowrap"><a href="{{ data.product_url }}" target="_blank">Product URL</a>
+                                                <i class="fas fa-copy copy-icon" title="Copy URL" onclick="copyToClipboard('{{ data.product_url }}')"></i></td>
+                                            <td class="nowrap">{{ data.mpn }}</td>
+                                            <td>{{ data.catlvl1 }}</td>
+                                            <td>{{ data.spec }}</td>
+                                            <!-- Add more columns as needed -->
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                                </div>
+                            {% endif %}
+                            
+                        </div>
+                        
+                    </div>
+                </div>
+                <!-- pppp  -->
+            </div>
+        </div>
+    </div>
+
+
+    
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script>
+         // Show the loader and blur background
+      function showLoader() {
+            document.getElementById("loader").style.display = "block";
+            document.getElementById("blurBackground").style.display = "block";
+        }
+
+        // Hide the loader and blur background
+        function hideLoader() {
+            document.getElementById("loader").style.display = "none";
+            document.getElementById("blurBackground").style.display = "none";
+        }
+
+        // Add an event listener to the form submit
+        document.getElementById("searchForm").addEventListener("submit", function() {
+            showLoader();
+        });
+
+        // Hide the loader when the page finishes loading
+        window.addEventListener("load", function () {
+            hideLoader();
+        });
+
+        function showInput() {
+            var inputtable = document.getElementById("input_data_wrapper");
+            var outputtable = document.getElementById("outputdata_wrapper");
+            var input_button = document.getElementById("input_button");
+            var output_button = document.getElementById("output_button");
+
+                outputtable.style.display = 'none';
+                inputtable.style.display = 'block';
+                input_button.style.backgroundColor = '#2d4abd';
+                input_button.style.color = '#fff';
+                output_button.style.background = 'white';
+                output_button.style.color = 'black';
+                
+    
+        }
+        function showOutput() {
+            var inputtable = document.getElementById("input_data_wrapper");
+            var outputtable = document.getElementById("outputdata_wrapper");
+            var input_button = document.getElementById("input_button");
+            var output_button = document.getElementById("output_button");
+                outputtable.style.display = 'block';
+                inputtable.style.display = 'none';
+                input_button.style.background = 'white';
+                output_button.style.background = '#2d4abd';
+                output_button.style.color = '#fff';
+                input_button.style.color = 'black';
+    
+        }
+    </script>
+    <script>
+        $(document).ready( function () {
+            $('#input_data').DataTable();
+            $('#outputdata').DataTable();
+        });
+        $(document).ready(function(){
+            var inputtable = document.getElementById("input_data_wrapper");
+            var outputtable = document.getElementById("outputdata_wrapper");
+            var input_button = document.getElementById("input_button");
+            input_button.style.background = '#2d4abd';
+            input_button.style.color = '#fff';
+            outputtable.style.display = 'none';
+            inputtable.style.display = 'block';
+        });
+    </script>
+   <script>
+    function copyToClipboard(text, iconElement) {
+    const tempInput = document.createElement('textarea');
+    document.body.appendChild(tempInput);
+    tempInput.value = text;
+    tempInput.select();
+    document.execCommand('copy');
+    document.body.removeChild(tempInput);
+
+    // Add a tooltip to the icon to show that the text is copied
+    iconElement.setAttribute('title', 'Copied!');
+    setTimeout(() => {
+        iconElement.setAttribute('title', 'Copy URL');
+    }, 2000); // Reset the title after 2 seconds
+}
+
+
+   </script>
+
+    
+    
+</body>
+</html>

@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CHATS</title>
+</head>
+<body>
+
+<style>
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  /* background-color: #F0F0F0; */
+  background-color: #F2EDFF;
+  color:#12100E;
+}
+
+html { 
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+.navbar {
+    margin:0px auto;
+    background: #969696;
+    padding:20px 20px ;
+    display:flex ;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+h3{
+    margin: 0;
+}
+a{
+    text-decoration: none;
+    
+}
+
+.main {
+display: flex;
+
+
+}
+.user-list {
+    width:20%;
+    min-width: 20%;
+    background: #ccc;
+    height: calc(100vh - 40px);
+}
+.wrapper {
+    padding: 20px;
+    width: 80%;
+    min-width: 80%;
+    max-height: 100vh;
+
+}
+
+.user{
+    color:green;
+    background: white;
+    border-radius: 10px;
+    margin:10px ;
+
+    padding:10px;
+}
+.active{
+    color:rgb(214, 20, 43);
+    background: white;
+    border-radius: 10px;
+
+}
+.msg-box {
+   background: rgb(214, 207, 207);
+   padding: 20px;
+   margin-bottom: 15px;
+   border-radius: 12px;
+   width: 80%;
+
+}
+
+.message-sent{
+    background-color: azure;
+    padding: 10px;
+    border-radius: 5px;
+    margin:5px;
+    
+}
+.message-received{
+    background-color: rgb(188, 205, 205);
+    padding: 10px;
+    border-radius: 5px;
+    margin:5px;
+}
+
+.msg-form{
+ width: 70%;
+ height:45px;
+ border-radius: 10px;
+}
+.msg-form2{
+    height: 20px;
+    width: 100%;
+    border-radius: 10px;
+}
+.button{
+    border-radius :8px;
+    color:rgb(232, 79, 216);
+    
+    margin: 5px;
+    
+}
+.title{
+    color:black;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    
+}
+.chat-container{
+    overflow-y: auto;
+    max-height: 100vh;
+    margin-bottom: 20px;
+    position: relative;
+}
+.chat-containerr .last-element {
+  /* Position the last element at the bottom of the container */
+  position: absolute;
+  bottom: 0;
+}
+</style>
+
+<div class="navbar">
+    <img src="https://cdn.raptorsupplies.com/pub/static/frontend/Raptor/Desktop/en_US/images/rpt-logo.svg" style="width:150px;" alt="logo" />
+    <div>
+     <h3>Albert(Username)</h3>
+    </div>
+    <div>
+    <a  href="{% url 'logout' %}">Logout</a>
+    </div>
+</div>
+
+<div class="main">
+
+    <div class="user-list">
+        <div class="user">
+            <div>
+                <div id="newchat" >
+                    <form method="post"  action="{% url 'create-chat' %}">
+                        <!-- {% csrf_token %} -->
+                        <div style="position: relative;">
+                        <input type="text" class="msg-form2" name="title" placeholder="Create new chat.." required>
+                            <button  class="button" type="submit">Create</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="user">
+            <div class="{% if u.id == lastchat.id %}active{% endif %}">
+                <a href="{% url 'chat_screen_user'  u.id  %}">chat1</a>
+            </div>
+        </div>
+        <div class="user">
+            <div class="{% if u.id == lastchat.id %}active{% endif %}">
+                <a href="{% url 'chat_screen_user'  u.id  %}">chat2</a>
+            </div>
+        </div>
+        <div class="user">
+            <div class="{% if u.id == lastchat.id %}active{% endif %}">
+                <a href="{% url 'chat_screen_user'  u.id  %}">chat3</a>
+            </div>
+        </div>
+        <div class="user">
+            <div class="{% if u.id == lastchat.id %}active{% endif %}">
+                <a href="{% url 'chat_screen_user'  u.id  %}">chat15</a>
+            </div>
+        </div>
+        <div class="user">
+            <div class="{% if u.id == lastchat.id %}active{% endif %}">
+                <a href="{% url 'chat_screen_user'  u.id  %}">chat18</a>
+            </div>
+        </div>
+        <div class="user">
+            <div class="{% if u.id == lastchat.id %}active{% endif %}">
+                <a href="{% url 'chat_screen_user'  u.id  %}">chat17</a>
+            </div>
+        </div>
+        <div class="user">
+            <div class="{% if u.id == lastchat.id %}active{% endif %}">
+                <a href="{% url 'chat_screen_user'  u.id  %}">chat19</a>
+            </div>
+        </div>
+
+            
+        </div>
+
+    <!-- Display the chat history -->
+    <div class="wrapper" >
+            <div class="title">
+                <h2 style="margin-top:0px; margin-bottom: 0px;"> Activet chat title</h2>
+            </div>
+            <hr>
+            <div class="chat-container">
+                <div class="chat-history">
+                    <div class="msg-container" >
+                        
+                        <div class="message-sent">
+                            <div>
+                            <div class="msg">
+                                <span style="font-size: 20px; font-weight: 500;">You</span>
+                                <br>
+                                <span style="font-size:12px; ">Aug. 1, 2023, 5:21 a.m.</span>
+
+                            </div>
+                            <div class="msg-box">
+                                    <p>hi</p>
+                            </div>
+                        </div>
+                        </div>
+                        
+                        
+                    </div>
+                    <hr>
+                    
+                    <div class="msg-container" >
+                        
+                        <div class="message-received">
+                            <div>
+                                <div class="msg">
+                                    <span style="font-size: 20px; font-weight: 500;">charMRO</span>
+                                    <br>
+                                    <span style="font-size:12px; ">Aug. 1, 2023, 5:21 a.m.</span>
+                
+                                </div>
+                                <div class="msg-box">
+                                        <p id="46">Hi there!</p>
+                                </div>
+                        </div>
+                        </div>
+                        
+                    </div>
+                    <hr>
+                    
+                    <div class="msg-container" >
+                        
+                        <div class="message-sent">
+                            <div>
+                            <div class="msg">
+                                <span style="font-size: 20px; font-weight: 500;">You</span>
+                                <br>
+                                <span style="font-size:12px; ">Aug. 1, 2023, 5:21 a.m.</span>
+
+                            </div>
+                            <div class="msg-box">
+                                    <p>how are you</p>
+                            </div>
+                        </div>
+                        </div>
+                        
+                        
+                    </div>
+                    <hr>
+                    
+                    <div class="msg-container" >
+                        
+                        <div class="message-received">
+                            <div>
+                                <div class="msg">
+                                    <span style="font-size: 20px; font-weight: 500;">charMRO</span>
+                                    <br>
+                                    <span style="font-size:12px; ">Aug. 1, 2023, 5:21 a.m.</span>
+                
+                                </div>
+                                <div class="msg-box">
+                                        <p id="48">Sorry ! i cant provide an answer to that</p>
+                                </div>
+                        </div>
+                        </div>
+                        
+                    </div>
+                    <hr>
+                    
+                    <div class="msg-container" >
+                        
+                        <div class="message-sent">
+                            <div>
+                            <div class="msg">
+                                <span style="font-size: 20px; font-weight: 500;">You</span>
+                                <br>
+                                <span style="font-size:12px; ">Aug. 1, 2023, 5:21 a.m.</span>
+
+                            </div>
+                            <div class="msg-box">
+                                    <p>how are you</p>
+                            </div>
+                        </div>
+                        </div>
+                        
+                        
+                    </div>
+                    <hr>
+                    
+                    <div class="msg-container" >
+                        
+                        <div class="message-received">
+                            <div>
+                                <div class="msg">
+                                    <span style="font-size: 20px; font-weight: 500;">charMRO</span>
+                                    <br>
+                                    <span style="font-size:12px; ">Aug. 1, 2023, 5:21 a.m.</span>
+                
+                                </div>
+                                <div class="msg-box">
+                                        <p id="50">Sorry ! i cant provide an answer to that</p>
+                                </div>
+                        </div>
+                        </div>
+                        
+                    </div>
+                    <hr>
+                    
+                    <div class="msg-container" >
+                        
+                        <div class="message-sent">
+                            <div>
+                            <div class="msg">
+                                <span style="font-size: 20px; font-weight: 500;">You</span>
+                                <br>
+                                <span style="font-size:12px; ">Aug. 1, 2023, 5:22 a.m.</span>
+
+                            </div>
+                            <div class="msg-box">
+                                    <p>yes? how are you?</p>
+                            </div>
+                        </div>
+                        </div>
+                        
+                        
+                    </div>
+                    <hr>
+                    
+                    <div class="msg-container" >
+                        
+                        <div class="message-received">
+                            <div>
+                                <div class="msg">
+                                    <span style="font-size: 20px; font-weight: 500;">charMRO</span>
+                                    <br>
+                                    <span style="font-size:12px; ">Aug. 1, 2023, 5:22 a.m.</span>
+                
+                                </div>
+                                <div class="msg-box">
+                                        <p id="52">Sorry ! i cant provide an answer to that</p>
+                                </div>
+                        </div>
+                        </div>
+                        
+                    </div>
+                    <hr>
+                    
+                </div>
+                </div>
+                <!-- Message input form -->
+                    <div class="last-element">
+                        <form method="post" id="myForm" action="{% url 'chat_screen_user' lastchat.id %}">
+                            <div style="position: relative;">
+                            <input type="hidden" id="chat_id" name="chat_id" value="{{ lastchat.id }}">
+                                <input type="text" class="msg-form" name="message" placeholder="Type your message..." required>
+                                <button class="button" type="submit">Send</button>
+                                
+                            </div>
+                        </form>
+                    </div>
+                <p> create new chat to continue..</p>
+            </div>
+    </div>
+</div>
+ 
+</body>
